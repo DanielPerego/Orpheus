@@ -7,7 +7,7 @@ public class Usuario {
 	private String nomeUsuario;
 	protected String senha;
 	
-	Scanner sc = new Scanner(System.in);
+	private Scanner sc = new Scanner(System.in);
 	
 	public boolean isConta() {
 		return conta;
@@ -47,72 +47,79 @@ public class Usuario {
 	public void loginConta() {
 		System.out.println();
 		System.out.println("Digite o nome de cadastro do usuário:");
-		String cadastro = sc.next();
+		String nomeCadastro = sc.next();
 		
-		while(!cadastro.equals(getNomeUsuario())){
+		while(!nomeCadastro.equals(getNomeUsuario())){
 			System.out.println();
 			System.out.println("Nome de usuário inválido! \nTente novamente");
-			cadastro = sc.next();
+			nomeCadastro = sc.next();
 		}
 		
 		System.out.println();
 		System.out.println("Digite a senha do usuário:");
-		cadastro = sc.next();
+		String senhaCadastro = sc.next();
 		
-		while(!cadastro.equals(getSenha())) {
+		while(!senhaCadastro.equals(getSenha())) {
 			System.out.println();
 			System.out.println("Senha inválida! \nTente novamente");
-			cadastro = sc.next();
+			senhaCadastro = sc.next();
 		}
 	}
 	
 	public void excludeConta() {
-		System.out.println();
-		System.out.println("Você deseja excluir sua conta? \nS - Sim \nN - Não");
-		char option = sc.next().toUpperCase().charAt(0);
-		
-		if(option == 'S') {
+		if(!isConta()) {
 			System.out.println();
-			System.out.println("Digite sua senha para confirmar a exclusão:");
-			String exclude = sc.next();
-			
-			while(!exclude.equals(getSenha())) {
-				System.out.println();
-				System.out.println("Senha inválida!");
-				System.out.println("Tente novamente ou digite 0 para cancelar a operação");
-				exclude = sc.next();
-				
-				if(exclude.equals("0")) {
-					return;
-				}
-			}
-			System.out.println();
-			System.out.println("Conta excluída com sucesso!");
-			
-			setConta(false);
-				
-		}else if(option == 'N') {
+			System.out.println("Você não possui uma conta!");
 			return;
-			
 		}else {
 			System.out.println();
-			System.out.println("Opção inválida!");
-			return;
+			System.out.println("Você deseja excluir sua conta? \nS - Sim \nN - Não");
+			char option = sc.next().toUpperCase().charAt(0);
+			
+			if(option == 'S') {
+				System.out.println();
+				System.out.println("Digite sua senha para confirmar a exclusão:");
+				String exclude = sc.next();
+				
+				while(!exclude.equals(getSenha())) {
+					System.out.println();
+					System.out.println("Senha inválida!");
+					System.out.println("Tente novamente ou digite 0 para cancelar a operação");
+					exclude = sc.next();
+					
+					if(exclude.equals("0")) {
+						return;
+					}
+				}
+				System.out.println();
+				System.out.println("Conta excluída com sucesso!");
+				
+				setConta(false);
+				setNomeUsuario(null);
+				setSenha(null);
+					
+			}else if(option == 'N') {
+				return;
+				
+			}else {
+				System.out.println();
+				System.out.println("Opção inválida!");
+				return;
+			}
 		}
 	}
 	
-	public void alterInformacoesConta() {
+	public void updateInformacoesConta() {
 		System.out.println();
 		System.out.println("Que informações você deseja alterar? \nNome - Alterar nome \nSenha - Alterar senha");
 		String alterar = sc.next();
-		alterar = alterar.toLowerCase();
 		
-		if(alterar.equals("nome")) {
+		if(alterar.equalsIgnoreCase("nome")) {
 			System.out.println();
 			System.out.println("Digite o novo nome de usuário:");
 			setNomeUsuario(sc.next());
 			
-		}else if(alterar.equals("senha")) {
+		}else if(alterar.equalsIgnoreCase("senha")) {
 			System.out.println();
 			System.out.println("Digite a nova senha de usuário:");
 			setSenha(sc.next());
