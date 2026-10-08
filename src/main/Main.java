@@ -41,6 +41,7 @@ public class Main {
 	
 	public void logar() {
 		String nomeLogin, senhaLogin;
+		boolean login;
 		
 		do {		
 			System.out.println("Digite o nome do usuário:");
@@ -51,9 +52,9 @@ public class Main {
 			senhaLogin = sc.next();
 			System.out.println();
 				
-			user1.loginConta(nomeLogin, senhaLogin);
+			login = user1.loginConta(nomeLogin, senhaLogin);
 			
-			if(!user1.loginConta(nomeLogin, senhaLogin)) {
+			if(!login) {
 				System.out.println("Nome ou Senha incorretos! \nTente novamente!");
 				System.out.println();
 				
@@ -62,7 +63,7 @@ public class Main {
 				System.out.println();
 			}
 			
-			}while(!user1.loginConta(nomeLogin, senhaLogin));
+			}while(!login);
 	}
 	
 	public void menuPrincipal() {
