@@ -83,7 +83,7 @@ public class Main {
 					break;
 					
 				case 2:
-					
+					menuMusica();
 					break;
 					
 				case 0:
@@ -170,4 +170,29 @@ public class Main {
 				
 		}
 	}
+	
+	public void menuMusica() {
+		
+		int opcaomusica;
+		
+		System.out.println("\nQual opção deseja escolher?");
+		System.out.println("1 - Ouvir música");
+		System.out.println("2 - Curtir música");
+		System.out.println("3 - Ouvir albúm");
+		System.out.println("4 - Curtir albúm");
+		System.out.println("5 - Criar playlist");
+		System.out.println("6 - Ver músicas disponiveis");
+		System.out.println("0 - Retornar para o Menu pricipal");
+		opcaomusica = sc.nextInt();
+		sc.nextLine();
+		
+		switch(opcaomusica) {
+		
+		case 1:
+			System.out.println(Musica.m1);
+			break;
+		}
+	}
+	
+	
 }
