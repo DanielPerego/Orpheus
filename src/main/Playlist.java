@@ -3,6 +3,8 @@ package main;
 import java.util.ArrayList;
 
 public class Playlist {
+	
+	
 
     private String nome;
     private int musicaAtual = 0;

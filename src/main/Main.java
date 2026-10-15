@@ -178,18 +178,25 @@ public class Main {
 		System.out.println("\nQual opção deseja escolher?");
 		System.out.println("1 - Ouvir música");
 		System.out.println("2 - Curtir música");
-		System.out.println("3 - Ouvir albúm");
-		System.out.println("4 - Curtir albúm");
-		System.out.println("5 - Criar playlist");
-		System.out.println("6 - Ver músicas disponiveis");
+		System.out.println("3 - Ver músicas curtidas");
+		System.out.println("4 - Ouvir albúm");
+		System.out.println("5 - Curtir albúm");
+		System.out.println("6 - Criar playlist");
+		System.out.println("7 - Ver músicas disponiveis");
 		System.out.println("0 - Retornar para o Menu pricipal");
 		opcaomusica = sc.nextInt();
 		sc.nextLine();
 		
 		switch(opcaomusica) {
 		
-		case 1:
-			System.out.println(Musica.m1);
+		case 2:
+			System.out.println("Qual música desejas curtir:");
+			int musica = sc.nextInt();
+			Musica.musicas.get(musica - 1).curtirMusica();
+			break;
+		
+		case 3:
+			Musica.mostrarCurtidas();
 			break;
 		}
 	}
