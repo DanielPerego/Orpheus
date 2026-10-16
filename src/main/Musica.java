@@ -24,8 +24,16 @@ public class Musica {
 		this.genero = genero;
 	}
 	
-	public void curtirMusica () {
-		this.curtir = true;
+	public static void curtirMusica (String nome) {
+		for (Musica m : musicas) {
+			if (m.getNome().equalsIgnoreCase(nome)) {
+				m.setCurtir(true);
+	            System.out.println("\nCurtiu - " + m.getNome() + " (" + m.getArtista() + ") - " + m.getAlbum());
+	            return;
+	        }	
+		}
+		System.out.println("Música não encontrada");
+	
 	}
 	
 	public static void mostrarCurtidas () {
@@ -40,8 +48,25 @@ public class Musica {
 			}
 			
 		}
-		if (!flag) {
+		if (!    flag) {
 			System.out.println("Nenhuma Música Curtida");
+		}
+			
+	}
+	
+	public static void ouvirMusica (String nome) {
+		for (Musica m : musicas) {
+			if (m.getNome().equalsIgnoreCase(nome)) {
+	            System.out.println("\nOuvindo - " + m.getNome() + " (" + m.getArtista() + ") - " + m.getAlbum());
+	            return;
+	        }	
+		}
+		System.out.println("Música não encontrada");
+	}
+	
+	public static void listarMusicas () {
+		for (Musica m : musicas) {
+			System.out.println("\n" + m.getId() + " - " + m.getNome() + " (" + m.getArtista() + ") - " +m.getAlbum() + " -  " + (m.getDuracao() / 60)+ " - " +m.getGenero() );
 		}
 	}
 	
