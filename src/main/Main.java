@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
 
 	Scanner sc = new Scanner(System.in);
-	Usuario user1 = new Usuario();
+	Usuario usuarioLogado = null;
 	
 	public static void main(String[] args) {
 		
@@ -13,71 +13,48 @@ public class Main {
 		
 		System.out.println("Bem-Vindo ao sistema de músicas Orpheus!");
 		
-		sistema.cadastrar();
-		sistema.logar();
 		sistema.menuPrincipal();
 		
 		sistema.sc.close();
 	}
 
-	public void cadastrar() {
-		System.out.println("Crie sua conta!");
-		System.out.println();
-			
-		System.out.println("Digite o nome do usuário:");
-		String nomeCadastro = sc.next();
-		System.out.println();
-			
-		System.out.println("Digite a senha do usuário:");
-		String senhaCadastro = sc.next();
-		System.out.println();
-			
-		user1.createConta(nomeCadastro, senhaCadastro);
-		System.out.println("Usuário cadastrado com sucesso!");
-			
-		System.out.println("Faça login com seu usuário!");
-		System.out.println();
-	}
-	
-	public void logar() {
-		String nomeLogin, senhaLogin;
-		boolean login;
-		
-		do {		
-			System.out.println("Digite o nome do usuário:");
-			nomeLogin = sc.next();
-			System.out.println();
-				
-			System.out.println("Digite a senha do usuário:");
-			senhaLogin = sc.next();
-			System.out.println();
-				
-			login = user1.loginConta(nomeLogin, senhaLogin);
-			
-			if(!login) {
-				System.out.println("Nome ou Senha incorretos! \nTente novamente!");
-				System.out.println();
-				
-			}else {
-				System.out.println("Logado com sucesso!");
-				System.out.println();
-			}
-			
-			}while(!login);
-	}
-	
 	public void menuPrincipal() {
-		int opcoesMenu;
-		
-		do {
-			System.out.println("\nEscolha sua opção de interação:");
-			System.out.println("1 - Opções de usuário");
-			System.out.println("2 - Opções de música");
-			System.out.println("0 - Encerrar programa");
-			opcoesMenu = sc.nextInt();
-			sc.nextLine();
-			
-			switch(opcoesMenu) {
+		while(true){
+			if(usuarioLogado == null) {
+				System.out.println("\nMenu Principal");
+				System.out.println("1 - Criar conta");
+				System.out.println("2 - Fazer login");
+				System.out.println("0 - Encerrar programa");
+				
+				int opcoesMenu = sc.nextInt();
+				sc.nextLine();
+				
+				switch(opcoesMenu) {
+				case 1:
+					cadastrar();
+					break;
+					
+				case 2:
+					logar();
+					break;
+					
+				case 0:
+					System.out.println("Encerrando programa...");
+					return;
+					
+				default:
+					System.out.println("Opção inválida!");
+				}
+			}else {
+				System.out.println("Menu Principal");
+				System.out.println("1 - Menu de Usuário");
+				System.out.println("2 - Menu de Música");
+				System.out.println("0 - Encerrar programa");
+				
+				int opcoesMenu = sc.nextInt();
+				sc.nextLine();
+				
+				switch(opcoesMenu) {
 				case 1:
 					menuUsuario();
 					break;
@@ -92,70 +69,41 @@ public class Main {
 					
 				default:
 					System.out.println("Opção inválida!");
+				}
 			}
-			
-		}while(opcoesMenu != 0 && user1.isConta());
+		}
 	}
 	
 	public void menuUsuario() {
-		int opcoesMenuUsuario;
-		char opcoesExclude;
+		if(usuarioLogado == null) {
+			System.out.println("Você precisa fazer login primeiro!");
+			return;
+		}
 		
 		System.out.println("\nQual opção de usuário você deseja?");
 		System.out.println("1 - Mostrar Status de Usuário");
 		System.out.println("2 - Atualizar Informações de Usuário");
-		System.out.println("3 - Excluir conta");
+		System.out.println("3 - Sair da Conta");
+		System.out.println("4 - Excluir conta");
 		System.out.println("0 - Retornar ao menu principal");
-		opcoesMenuUsuario = sc.nextInt();
+		int opcoesMenuUsuario = sc.nextInt();
 		sc.nextLine();
 		
 		switch(opcoesMenuUsuario) {
 			case 1:
-				user1.showStatusUsuario();
+				usuarioLogado.showStatusUsuario();
 				break;
 				
 			case 2:
-				System.out.println("\nDigite o novo nome de usuário:");
-				String nomeUpdate = sc.next();
-				System.out.println();
-				
-				System.out.println("Digite a nova senha de usuário:");
-				String senhaUpdate = sc.next();
-				
-				user1.updateInformacoesConta(nomeUpdate, senhaUpdate);
-				System.out.println("\nAlterações feitas com sucesso!");
-				System.out.println();
+				atualizarUsuario();
 				break;
 				
 			case 3:
-				System.out.println("Você tem certeza que deseja excluir sua conta?");
-				System.out.println("S - Sim");
-				System.out.println("N - Não");
-				opcoesExclude = sc.next().toLowerCase().charAt(0);
+				logoutConta();
+				break;
 				
-				if(opcoesExclude == 's') {
-						System.out.println("\nDigite sua senha para excluir sua conta");
-						String senhaExclude = sc.next();
-						System.out.println();
-					
-					while(!senhaExclude.equals(user1.getSenha())) {
-						System.out.println("Opção inválida! \nTente novamente\n");
-						senhaExclude = sc.next();
-					}
-					
-					user1.excludeConta();
-					System.out.println("Usuário excluído com sucesso!");
-					cadastrar();
-					
-				}else if(opcoesExclude == 'n') {
-					break;
-					
-				}else {
-					System.out.println("Opção inválida!");
-					System.out.println();
-					break;
-					
-				}
+			case 4:
+				excluirUsuario();
 				break;
 				
 			case 0:
@@ -178,28 +126,131 @@ public class Main {
 		System.out.println("\nQual opção deseja escolher?");
 		System.out.println("1 - Ouvir música");
 		System.out.println("2 - Curtir música");
-		System.out.println("3 - Ver músicas curtidas");
-		System.out.println("4 - Ouvir albúm");
-		System.out.println("5 - Curtir albúm");
-		System.out.println("6 - Criar playlist");
-		System.out.println("7 - Ver músicas disponiveis");
+		System.out.println("3 - Ouvir albúm");
+		System.out.println("4 - Curtir albúm");
+		System.out.println("5 - Criar playlist");
+		System.out.println("6 - Ver músicas disponiveis");
 		System.out.println("0 - Retornar para o Menu pricipal");
 		opcaomusica = sc.nextInt();
 		sc.nextLine();
 		
 		switch(opcaomusica) {
 		
-		case 2:
-			System.out.println("Qual música desejas curtir:");
-			int musica = sc.nextInt();
-			Musica.musicas.get(musica - 1).curtirMusica();
-			break;
-		
-		case 3:
-			Musica.mostrarCurtidas();
+		case 1:
+			;
 			break;
 		}
 	}
 	
+	public void cadastrar() {
+		System.out.println("Crie sua conta!\n");
+			
+		System.out.println("Digite o nome do usuário:");
+		String nomeCadastro = sc.nextLine().trim();
+			
+		System.out.println("\nDigite a senha do usuário:");
+		String senhaCadastro = sc.nextLine();
+			
+		Usuario novoUsuario = new Usuario();
+		
+		if(novoUsuario.createConta(nomeCadastro, senhaCadastro)) {
+			System.out.println("\nUsuário cadastrado com sucesso!");
+		}else {
+			System.out.println("Cadastro inválido ou nome de usuário já utilizado!");
+		}
+	}
 	
+	public void logar() {
+		String nomeLogin, senhaLogin;
+		
+		System.out.println("Faça login com seu usuário!\n");
+		
+		while (true){		
+			System.out.println("Digite o nome do usuário:");
+			nomeLogin = sc.nextLine().trim();
+				
+			System.out.println("\nDigite a senha do usuário:");
+			senhaLogin = sc.nextLine();
+			System.out.println();
+				
+			usuarioLogado = Usuario.buscarUsuario(nomeLogin, senhaLogin);
+		
+			if(usuarioLogado != null) {
+				usuarioLogado.setLogado(true);
+				System.out.println("Logado com sucesso!");
+				System.out.println();
+				return;
+				}else if(!Usuario.existeUsuario(nomeLogin)) {
+					System.out.println("Usuário não encontrado!");
+                    System.out.println();
+				}else {
+					System.out.println("Senha incorreta!");
+                    System.out.println();
+				}
+			
+			System.out.println("1 - Tentar novamente \n2 - Retornar ao menu principal");
+			int opcaoLogin = sc.nextInt();
+			sc.nextLine();
+			
+			if (opcaoLogin == 2) {
+				System.out.println("Retornando ao menu principal...");
+				System.out.println();
+				return;
+			} else if (opcaoLogin != 1) {
+				System.out.println("Opção inválida! Retornando ao menu principal...");
+				return;
+			}
+		}
+	}
+	
+	public void atualizarUsuario() {
+		System.out.println("\nDigite o novo nome de usuário:");
+	    String nomeUpdate = sc.nextLine().trim();
+
+	    System.out.println("Digite a nova senha:");
+	    String senhaUpdate = sc.nextLine();
+
+	    if (usuarioLogado.updateInformacoesConta(nomeUpdate, senhaUpdate)) {
+	        System.out.println("\nInformações atualizadas com sucesso!");
+	        System.out.println();
+	    } else {
+	        System.out.println("\nNão foi possível atualizar. Verifique os dados ou se o nome já está em uso");
+	        System.out.println();
+	    }
+	}
+	
+	public void excluirUsuario() {
+		System.out.println("\nTem certeza de que deseja excluir sua conta?");
+		    System.out.println("S - Sim");
+		    System.out.println("N - Não");
+
+		    String confirmacao = sc.nextLine().trim();
+
+		    if (confirmacao.equalsIgnoreCase("S")) {
+		        System.out.println("Digite sua senha para confirmar:");
+		        String senhaExcluir = sc.nextLine();
+
+		        if (senhaExcluir.equals(usuarioLogado.getSenha())) {
+		            if (usuarioLogado.excludeConta()) {
+		                usuarioLogado = null;
+		                System.out.println("\nConta excluída com sucesso!\n");
+		            }
+		        } else {
+		            System.out.println("\nSenha incorreta. Conta preservada.\n");
+		        }
+
+		    } else if (confirmacao.equalsIgnoreCase("N")) {
+		        System.out.println("\nExclusão cancelada.\n");
+
+		    } else {
+		        System.out.println("\nOpção inválida. Exclusão cancelada.\n");
+		    }
+	}
+	
+	public void logoutConta() {
+		System.out.println("Saindo da conta...");
+		usuarioLogado.setLogado(false);
+		usuarioLogado = null;
+		System.out.println("Você saiu da conta com sucesso!");
+	}
 }
