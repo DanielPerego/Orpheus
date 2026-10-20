@@ -144,7 +144,9 @@ public class Main {
 		switch(opcaomusica) {
 		
 		case 1:
-			;
+			System.out.println("Qual música deseja ouvir:");
+			String nome = sc.nextLine();
+			Musica.ouvirMusica(nome);
 			break;
 		}
 	}
