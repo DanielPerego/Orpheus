@@ -6,7 +6,6 @@ public class Main {
 
 	Scanner sc = new Scanner(System.in);
 	Usuario usuarioLogado = null;
-	GerenciadorPlaylist gerenciador = new GerenciadorPlaylist();
 	
 	public static void main(String[] args) {
 		
@@ -66,8 +65,10 @@ public class Main {
 					break;
 					
 				case 3:
-					MenuPlaylistUI menuPlaylist = new MenuPlaylistUI(sc, gerenciador);
-				    menuPlaylist.exibirMenu();
+					if(usuarioLogado != null) {
+						MenuPlaylistUI menuPlaylist = new MenuPlaylistUI(sc, usuarioLogado.getGerenciadorPlayList());
+						menuPlaylist.exibirMenu();
+					}
 				    break;
 					
 				case 0:
@@ -133,10 +134,8 @@ public class Main {
 		System.out.println("\nQual opção deseja escolher?");
 		System.out.println("1 - Ouvir música");
 		System.out.println("2 - Curtir música");
-		System.out.println("3 - Ouvir albúm");
-		System.out.println("4 - Curtir albúm");
-		System.out.println("5 - Criar playlist");
-		System.out.println("6 - Ver músicas disponiveis");
+		System.out.println("3 - Ver músicas curtidas");
+		System.out.println("4 - Ver músicas disponíveis");
 		System.out.println("0 - Retornar para o Menu pricipal");
 		opcaomusica = sc.nextInt();
 		sc.nextLine();
@@ -151,17 +150,27 @@ public class Main {
 			
 		case 2:
 			System.out.println("Qual música deseja curtir:");
-			String nomec= sc.nextLine();
-			Musica.curtirMusica(nomec);
+			String nome1 = sc.nextLine();
+		
+			Musica musica = Musica.buscarPorNome(nome1);
+			
+			if(musica != null) {
+				usuarioLogado.curtirMusica(musica);
+			}else {
+				System.out.println("Música não encontrada");
+			}
 			break;
 			
 		case 3:
-			Musica.mostrarCurtidas();
+			usuarioLogado.mostrarMusicasCurtidas();
 			break;
 			
-		case 8:
+		case 4:
 			Musica.listarMusicas();
 			break;
+			
+		default:
+			System.out.println("Opção inválida!");
 		}
 	}
 	

@@ -10,10 +10,7 @@ public class Musica {
 	private String artista;
 	private String album;
 	private int duracao = 0;
-	private String genero;
-	private boolean curtir = false;
-	
-	
+	private String genero;	
 	
 	public Musica(int id, String nome, String artista, String album, int duracao, String genero) {
 		this.id = id;
@@ -22,34 +19,6 @@ public class Musica {
 		this.album = album;
 		this.duracao = duracao;
 		this.genero = genero;
-	}
-	
-	public static void curtirMusica (String nome) {
-		for (Musica m : musicas) {
-			if (m.getNome().equalsIgnoreCase(nome)) {
-				m.setCurtir(true);
-	            System.out.println("\nCurtiu - " + m.getNome() + " (" + m.getArtista() + ") - " + m.getAlbum());
-	            return;
-	        }	
-		}
-		System.out.println("Música não encontrada");
-	
-	}
-	
-	public static void mostrarCurtidas () {
-		boolean flag = false;
-		for (Musica m : musicas) {
-			if (m.isCurtir()) {
-				if (!flag) {
-					System.out.println("Músicas Curtidas:");
-				}
-				System.out.println(m.getId() + " - " + m.getNome() + " (" + m.getArtista() + ")");
-				flag = true;
-			}
-		}
-		if (!    flag) {
-			System.out.println("Nenhuma Música Curtida");
-		}		
 	}
 	
 	public static void ouvirMusica (String nome) {
@@ -67,6 +36,22 @@ public class Musica {
 			System.out.println("\n" + m.getId() + " - " + m.getNome() + " (" + m.getArtista() + ") - " +m.getAlbum() + " -  " + (m.getDuracao() / 60)+ " - " +m.getGenero() );
 		}
 	}
+	
+	public static Musica buscarPorId (int id) {
+	     for (Musica m : musicas) {
+	         if (m.getId() == id) 
+	        	 return m;
+	     }
+	     return null;
+	 }
+	
+	public static Musica buscarPorNome (String nome) {
+		 for (Musica m : musicas) {
+			 if (m.getNome().equalsIgnoreCase(nome.trim())) 
+				 return m;
+		 }
+		 return null;
+	 }
 	
 	public static final List<Musica> musicas = new ArrayList<>();
 
@@ -152,17 +137,6 @@ public class Musica {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-    public boolean isCurtir() {
-		return curtir;
-	}
-
-	public void setCurtir(boolean curtir) {
-		this.curtir = curtir;
-	}
-
-
-
-		
 }
 
 

@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
 	protected boolean conta;
@@ -9,6 +10,10 @@ public class Usuario {
 	private boolean logado;
 	
 	private static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+	
+	private GerenciadorPlaylist gerenciadorPlaylist = new GerenciadorPlaylist();
+	private List<Musica> musicasCurtidas = new ArrayList<>();
+	private List<Album> albunsCurtidos = new ArrayList<>();
 	
 	public boolean createConta(String nomeUsuario, String senhaUsuario) {
 		if(conta) {
@@ -100,6 +105,30 @@ public class Usuario {
 	    return false;
 	}
 	
+	public void curtirMusica (Musica musica) {
+		if(musica != null && !musicasCurtidas.contains(musica)) {
+			musicasCurtidas.add(musica);
+			System.out.println("Música "+ musica.getNome() +" curtida com sucesso!");
+		}else {
+			System.out.println("Música já curtida ou inválida!");
+		}
+		System.out.println();
+	}
+	
+	public void mostrarMusicasCurtidas() {
+		if(musicasCurtidas.isEmpty()) {
+			System.out.println("Você não curtiu nenhuma música!");
+			return;
+		}
+		System.out.println("\n=== Suas Músicas Curtidas! ===");
+		int i = 1;
+		for(Musica m : musicasCurtidas) {
+			System.out.println(i + " - "+m.getNome() + " ("+m.getArtista()+ ")");
+			i ++;
+		}
+		System.out.println();
+	}
+	
 	public Usuario() {
 		conta = false;
 		nomeUsuario = null;
@@ -138,4 +167,18 @@ public class Usuario {
 	public void setLogado(boolean logado) {
 		this.logado = logado;
 	}
+	
+	public GerenciadorPlaylist getGerenciadorPlayList() {
+		return gerenciadorPlaylist;
+	}
+
+	public List<Musica> getMusicasCurtidas() {
+		return musicasCurtidas;
+	}
+
+	public List<Album> getAlbunsCurtidos() {
+		return albunsCurtidos;
+	}
+	
+	
 }
