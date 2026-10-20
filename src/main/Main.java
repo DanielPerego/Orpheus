@@ -148,6 +148,20 @@ public class Main {
 			String nome = sc.nextLine();
 			Musica.ouvirMusica(nome);
 			break;
+			
+		case 2:
+			System.out.println("Qual música deseja curtir:");
+			String nomec= sc.nextLine();
+			Musica.curtirMusica(nomec);
+			break;
+			
+		case 3:
+			Musica.mostrarCurtidas();
+			break;
+			
+		case 8:
+			Musica.listarMusicas();
+			break;
 		}
 	}
 	
