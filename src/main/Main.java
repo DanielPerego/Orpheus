@@ -136,6 +136,10 @@ public class Main {
 		System.out.println("2 - Curtir música");
 		System.out.println("3 - Ver músicas curtidas");
 		System.out.println("4 - Ver músicas disponíveis");
+		System.out.println("3 - Listar música");
+		System.out.println("4 - Ouvir albúm");
+		System.out.println("5 - Curtir albúm");
+		System.out.println("6 - Ver músicas disponiveis");
 		System.out.println("0 - Retornar para o Menu pricipal");
 		opcaomusica = sc.nextInt();
 		sc.nextLine();

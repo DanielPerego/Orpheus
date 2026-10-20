@@ -37,6 +37,7 @@ public class Musica {
 		}
 	}
 	
+
 	public static Musica buscarPorId (int id) {
 	     for (Musica m : musicas) {
 	         if (m.getId() == id) 
@@ -52,6 +53,23 @@ public class Musica {
 		 }
 		 return null;
 	 }
+
+	public static Musica buscarMusicaNome (String nome) {	
+		for (Musica m : musicas) {
+			if (m.getNome().equalsIgnoreCase(nome.trim())) {
+				return m;
+			}
+		}
+		return null;
+	}
+	public static Musica buscarMusicaId (int id) {
+		for (Musica m : musicas) {
+			if (m.getId() == id) {
+				return m;
+			}
+		}
+		return null;
+	}
 	
 	public static final List<Musica> musicas = new ArrayList<>();
 
