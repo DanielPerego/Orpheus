@@ -6,6 +6,7 @@ public class Main {
 
 	Scanner sc = new Scanner(System.in);
 	Usuario usuarioLogado = null;
+	GerenciadorPlaylist gerenciador = new GerenciadorPlaylist();
 	
 	public static void main(String[] args) {
 		
@@ -49,6 +50,7 @@ public class Main {
 				System.out.println("Menu Principal");
 				System.out.println("1 - Menu de Usuário");
 				System.out.println("2 - Menu de Música");
+				System.out.println("3 - Menu de playlists");
 				System.out.println("0 - Encerrar programa");
 				
 				int opcoesMenu = sc.nextInt();
@@ -62,6 +64,11 @@ public class Main {
 				case 2:
 					menuMusica();
 					break;
+					
+				case 3:
+					MenuPlaylistUI menuPlaylist = new MenuPlaylistUI(sc, gerenciador);
+				    menuPlaylist.exibirMenu();
+				    break;
 					
 				case 0:
 					System.out.println("Encerrando programa...");
