@@ -129,6 +129,28 @@ public class Usuario {
 		System.out.println();
 	}
 	
+	public void curtirAlbum (Album album) {
+		if(album != null && !albunsCurtidos.contains(album)) {
+            albunsCurtidos.add(album);
+            System.out.println("Álbum "+ album.getNome() +" curtido com sucesso!");
+            } else {
+            	System.out.println("Álbum já curtido ou inválido!");
+            }
+	}
+	
+	public void mostrarAlbunsCurtidos() {
+		if (albunsCurtidos.isEmpty()) {
+			System.out.println("Você não curtiu nenhum álbum!");
+			return;
+		}
+		System.out.println("\n=== Seus Álbuns Curtidos! ===");
+		int i = 1;
+		for (Album a : albunsCurtidos) {
+			System.out.println(i + " - " + a.getNome() + " (" + a.getArtista() + ")");
+			i++;
+		}
+	}
+	
 	public Usuario() {
 		conta = false;
 		nomeUsuario = null;

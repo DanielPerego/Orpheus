@@ -136,10 +136,11 @@ public class Main {
 		System.out.println("2 - Curtir música");
 		System.out.println("3 - Ver músicas curtidas");
 		System.out.println("4 - Ver músicas disponíveis");
-		System.out.println("3 - Listar música");
-		System.out.println("4 - Ouvir albúm");
-		System.out.println("5 - Curtir albúm");
-		System.out.println("6 - Ver músicas disponiveis");
+		System.out.println("5 - Ver álbuns disponíveis");
+		System.out.println("6 - Ouvir albúm");
+		System.out.println("7 - Curtir albúm");
+		System.out.println("8 - Ver álbuns curtidos");
+		System.out.println("9 - Ver músicas de um álbum");
 		System.out.println("0 - Retornar para o Menu pricipal");
 		opcaomusica = sc.nextInt();
 		sc.nextLine();
@@ -172,6 +173,60 @@ public class Main {
 		case 4:
 			Musica.listarMusicas();
 			break;
+			
+		case 5:
+			Album.listarAlbuns();
+			break;
+			
+		case 6:
+			System.out.println("Qual álbum deseja ouvir?");
+			String nomeAlbumOuvir = sc.nextLine();
+			
+			Album albumOuvir = Album.buscarPorNome(nomeAlbumOuvir);
+			
+			if(albumOuvir != null) {
+				albumOuvir.ouvir();
+			}else {
+				System.out.println("Álbum não encontrado");
+			}
+			break;
+			
+		case 7:
+			System.out.println("Qual álbum deseja curtir:");
+			String nomeAlbumCurtir = sc.nextLine();
+			
+			Album albumCurtir = Album.buscarPorNome(nomeAlbumCurtir);
+			
+			if (albumCurtir != null) {
+				usuarioLogado.curtirAlbum(albumCurtir);
+			} else {
+				System.out.println("Álbum não encontrado");
+			}
+			System.out.println();
+			break;
+			
+		case 8:
+			usuarioLogado.mostrarAlbunsCurtidos();
+			System.out.println();
+			break;
+			
+		case 9:
+			System.out.println("De qual álbum deseja ver as músicas:");
+			String nomeAlbumVer = sc.nextLine();
+			
+			Album albumVer = Album.buscarPorNome(nomeAlbumVer);
+			
+			if (albumVer != null) {
+				albumVer.listarMusicas();
+			} else {
+				System.out.println("Álbum não encontrado");
+			}
+			break;
+
+		case 0:
+			System.out.println("Retornando ao menu principal...");
+			System.out.println();
+			return;
 			
 		default:
 			System.out.println("Opção inválida!");
